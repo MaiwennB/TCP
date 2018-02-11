@@ -1,8 +1,7 @@
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.Inet4Address;
-import java.net.UnknownHostException;
+import java.io.*;
+import java.net.*;
+
+
 
 public class clientSoketTCP {
 	//******************ATTRIBUTS******************//
@@ -10,36 +9,45 @@ public class clientSoketTCP {
 	private int portServeur;
 	private Inet4Address ipClient;
 	private int portClient;
-	private DatagramSocket clientSoket;
+	private DatagramSocket clientSocket;
 	private DatagramPacket dataSend;
 	private DatagramPacket dataRec;
-	private byte[] bufferSend;
-	private byte[] bufferRec;
+	private DataOutputStream bufferSend;
+	private BufferedReader bufferRec;
+	private String sentence;
+	private String modifiedSentence;
 	//***************CONSTRUCTOR*****************//
-	public clientSoketTCP() {
+	public clientSoketTCP() throws IOException {
 		super();
+		this.ipClient = (Inet4Address) InetAddress.getByName("0.0.0.0");
+		this.ipServeur = (Inet4Address) Inet4Address.getLocalHost();
+		connecter();
+		envoyerRequete();
+		recevoirReponse();
+		deconecter();
 		
 	}
 	//*************** GET&SET *****************//
 	
 	//**************METHODES******************//
-	public void connecter() {
-			
+	public void connecter() throws UnknownHostException, IOException {
+		 	BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+		 	Socket clientSocket = new Socket("localhost", 6789);
 		}
 	public void deconecter() {
-		
+		 this.clientSocket.close();
 	}
-	public void envoyerRequete(String message, int port, String pIp) throws IOException {
-	
-		this.ipServeur.getByName(pIp);
-		this.portServeur = port;
-		this.dataSend = new DatagramPacket(this.bufferSend,port);
-		this.clientSoket.connect(this.ipServeur , this.portServeur );
-		this.clientSoket.send(this.dataSend);
+	public void envoyerRequete() throws IOException {
+		Socket clientSocket = new Socket("localhost", 6789);
+	    this.bufferSend = new DataOutputStream(clientSocket.getOutputStream());
+	    this.bufferRec = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+	    sentence = this.bufferRec .readLine();
+	    bufferSend.writeBytes(sentence + '\n');
 			
 	}
 	private void recevoirReponse() throws IOException {
-		this.clientSoket.receive(this.dataRec);
+		modifiedSentence = this.bufferRec.readLine();
+		System.out.println("FROM SERVER: " + modifiedSentence);
 	}
 	
 	

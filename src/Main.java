@@ -8,8 +8,9 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		
 		/* CLIENT */
+		serverSocketTCP serveurTcp = new serverSocketTCP(6789);
 		clientSoketTCP clientTcp = new clientSoketTCP();
-		serverSocketTCP serveurTcp = new serverSocketTCP(10);
+		
 		
 	}
 	
