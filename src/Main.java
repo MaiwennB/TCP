@@ -1,13 +1,15 @@
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.Inet4Address;
 
 public class Main {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		/* CLIENT */
-		clientSoketTCP clientUdp = new clientSoketTCP();
+		clientSoketTCP clientTcp = new clientSoketTCP();
+		serverSocketTCP serveurTcp = new serverSocketTCP(10);
 		
 	}
 	
