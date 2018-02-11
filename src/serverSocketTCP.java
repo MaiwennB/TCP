@@ -41,7 +41,8 @@ public class serverSocketTCP {
 		// appel des méthodes de la classe
 		this.lancerServeur(pPort);
 		this.attendreClient();
-		deconnecterClient();
+		this.deconnecterClient();
+		this.arreterServeur();
 	}
 	//**************METHODES******************//
 	private void lancerServeur(int pPort) throws IOException {
@@ -68,6 +69,10 @@ public class serverSocketTCP {
 		this.clientSoket.close();
 		this.FluxEntree.close();
 		this.FluxSortie.close();
+	}
+	private void arreterServeur() throws IOException {
+		this.serveur.close();
+		
 	}
 	private String recevoirRequette() throws IOException {
 		return this.requette.readLine();
@@ -176,10 +181,6 @@ public class serverSocketTCP {
 		this.requette = requette;
 	}
 
-	private void arreterServeur() throws IOException {
-		this.serveur.close();
-		
-	}
 	
 	
 	
